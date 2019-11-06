@@ -365,7 +365,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	 * Determine the specific transaction manager to use for the given transaction.
 	 */
 	protected PlatformTransactionManager determineTransactionManager(TransactionAttribute txAttr) {
-		// Do not attempt to lookup tx manager if no tx attributes are set
+		// Do not attempt to lookup tx manager if no tx attributes are set，返回默认的事务管理器，声明式事务配置在<tx:annoation/>
 		if (txAttr == null || this.beanFactory == null) {
 			return getTransactionManager();
 		}

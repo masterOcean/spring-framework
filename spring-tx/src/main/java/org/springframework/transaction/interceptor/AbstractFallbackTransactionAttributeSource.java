@@ -109,11 +109,12 @@ public abstract class AbstractFallbackTransactionAttributeSource implements Tran
 		else {
 			// We need to work it out.
 			TransactionAttribute txAttr = computeTransactionAttribute(method, targetClass);
-			// Put it in the cache.
+			// Put it in the cache,如果没有，则缓存一个null值，避免下次再被使用
 			if (txAttr == null) {
 				this.attributeCache.put(cacheKey, NULL_TRANSACTION_ATTRIBUTE);
 			}
 			else {
+				//方法描述符
 				String methodIdentification = ClassUtils.getQualifiedMethodName(method, targetClass);
 				if (txAttr instanceof DefaultTransactionAttribute) {
 					((DefaultTransactionAttribute) txAttr).setDescriptor(methodIdentification);
@@ -153,6 +154,7 @@ public abstract class AbstractFallbackTransactionAttributeSource implements Tran
 		}
 
 		// Ignore CGLIB subclasses - introspect the actual user class.
+		//获得真正的class，避免得到的是cglib生成的代理class
 		Class<?> userClass = ClassUtils.getUserClass(targetClass);
 		// The method may be on an interface, but we need attributes from the target class.
 		// If the target class is null, the method will be unchanged.
