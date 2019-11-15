@@ -338,6 +338,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	 */
 	@Override
 	public final TransactionStatus getTransaction(TransactionDefinition definition) throws TransactionException {
+		//生成hibernate transaction
 		Object transaction = doGetTransaction();
 
 		// Cache debug flag to avoid repeated checks.
